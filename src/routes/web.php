@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\Admin\ProductManageController;
+use App\Http\Controllers\CartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +28,19 @@ Route::get('/dashboard', function () {
     return redirect()->route('user.products.index');
 })->middleware(['auth'])->name('dashboard');
 
+// 購入手続き（仮）
+Route::middleware('auth')->group(function () {
+    Route::get('/checkout', function () {
+        return view('user.checkout.index');
+    })->name('checkout.index');
+});
+
+// ✅ カート機能（ログイン後のみ）
+Route::middleware('auth')->group(function () {
+    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+    Route::post('/cart/add/{product}', [CartController::class, 'add'])->name('cart.add');
+    Route::delete('/cart/remove/{cart}', [CartController::class, 'remove'])->name('cart.remove');
+});
 
 // ✅ Laravel Breeze の認証ルート（ログイン/ログアウト/登録）
 require __DIR__ . '/auth.php';
@@ -36,3 +50,6 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::post('products', [ProductManageController::class, 'store'])->name('products.store');
     Route::resource('products', ProductManageController::class)->except(['show']);
 });
+
+// ✅ 認証関連（Laravel Breeze）
+require __DIR__ . '/auth.php';

@@ -280,3 +280,17 @@ div.error-text {
 .search-form button:hover {
     background-color: #c2185b;
 }
+
+/* ショッピングカート */
+.add-to-cart-btn {
+    background-color: #ff8c00;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.add-to-cart-btn:hover {
+    background-color: #e07b00;
+}

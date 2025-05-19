@@ -16,7 +16,7 @@ class ProductController extends Controller
 
         // キーワード検索
         if ($request->filled('keyword')) {
-            $query->where('name', 'like', '%' . $request->keyword . '%');
+            $query->where('title', 'like', '%' . $request->keyword . '%');
         }
 
         // カテゴリ検索

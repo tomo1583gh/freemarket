@@ -10,13 +10,17 @@
 @foreach ($products as $product)
 <div class="product-card">
     <h2>{{ $product->title }}</h2>
-    <p>¥{{ $product->price }}</p>
-    <p>カテゴリ：{{ $product->category?->name ?? '未設定' }}</p>
-    <p>{{ $product->description }}</p>
     @if ($product->image_path)
     <img src="{{ asset('storage/' . $product->image_path) }}" width="150">
     @endif
+    <p>¥{{ $product->price }}</p>
+    <p>カテゴリ：{{ $product->category?->name ?? '未設定' }}</p>
+    <p>{{ $product->description }}</p>
     <p>出品者: {{ $product->user->name ?? '不明' }}</p>
+    <form action="{{ route('cart.add', $product->id) }}" method="POST">
+        @csrf
+        <button type="submit" class="add-to-cart-btn">カートに追加</button>
+    </form>
 </div>
 @endforeach
 
